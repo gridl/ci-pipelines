@@ -1,0 +1,6 @@
+jobs:
+    - name: precheck
+      type: runSh
+      steps:
+        - TASK:
+            - script: ./scripts/ci/build-docs.sh
