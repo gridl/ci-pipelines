@@ -1,6 +1,8 @@
 jobs:
-    - name: precheck
-      type: runSh
+    - name: zephyr_runCI
+      type: runCI
       steps:
-        - TASK:
-            - script: ./scripts/ci/build-docs.sh
+        - IN: daily-verify
+        - IN: daily-verify-asserts
+        - IN: zephyr_ciRepo
+

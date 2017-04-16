@@ -1,0 +1,25 @@
+resources:
+    - name: code-scan
+      type: time
+      seed:
+          interval: "13 21 * * *"
+
+    - name: daily-verify
+      type: time
+      seed:
+          interval: "20 * * * *"
+
+    - name: daily-verify-asserts
+      type: time
+      seed:
+          interval: "45 * * * *"
+
+    - name: zephyr-repo
+      type: gitRepo
+      integration: github
+      pointer:
+          sourceName: zephyrproject-rtos/zephyr-testing
+          branch: master
+          buildOnPullRequest: false
+          buildOnCommit: false
+
