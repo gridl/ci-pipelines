@@ -14,3 +14,13 @@ jobs:
         - IN: zephyr-testing_ciRepo
         - IN: coverity-token
         - IN: s3-token
+
+    - name: zephyr-daily-doc
+      type: runSh
+      steps:
+        - IN: s3-token
+        - IN: zephyr-repo
+        - TASK:
+          - script: find /  -name zephyr-env.sh
+          - script: . /build/IN/zephyr-repo/gitRepo/scripts/ci/build-docs.sh
+          - script: aws s3 sync --delete /build/IN/zephyr-repo/gitRepo/doc/_build/html s3://zephyr-docs/online/dev
