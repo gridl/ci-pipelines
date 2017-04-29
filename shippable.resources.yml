@@ -1,4 +1,12 @@
 resources:
+    - name: coverity-token
+      type: integration
+      integration: "coverity"
+
+    - name: s3-token
+      type: integration
+      integration: "aws_s3"
+
     - name: code-scan
       type: time
       seed:
@@ -7,12 +15,12 @@ resources:
     - name: daily-verify
       type: time
       seed:
-          interval: "20 * * * *"
+          interval: "20 21 * * *"
 
     - name: daily-verify-asserts
       type: time
       seed:
-          interval: "45 * * * *"
+          interval: "45 22 * * *"
 
     - name: zephyr-repo
       type: gitRepo
