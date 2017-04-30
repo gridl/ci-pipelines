@@ -22,4 +22,5 @@ jobs:
         - IN: testing_repo
         - IN: docs-theme-repo
         - TASK:
+          - script: env
           - script: . /build/IN/testing_repo/gitRepo/scripts/ci/build-docs.sh
