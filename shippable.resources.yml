@@ -38,5 +38,5 @@ resources:
           sourceName: zephyrproject-rtos/zephyr-testing
           branch: master
           buildOnPullRequest: false
-          buildOnCommit: false
+          buildOnCommit: true
 
