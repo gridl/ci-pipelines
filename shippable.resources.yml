@@ -15,12 +15,12 @@ resources:
     - name: daily-verify
       type: time
       seed:
-          interval: "20 21 * * *"
+          interval: "27 23 * * *"
 
     - name: daily-verify-asserts
       type: time
       seed:
-          interval: "45 22 * * *"
+          interval: "29 21 * * *"
 
     - name: docs-theme-repo
       type: gitRepo
