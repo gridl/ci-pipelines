@@ -22,6 +22,7 @@ jobs:
         - IN: main_repo
           switch: off
         - IN: docs_theme_repo
+          switch: off
         - IN: daily-docs
         - TASK:
           - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh

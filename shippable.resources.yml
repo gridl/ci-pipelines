@@ -34,7 +34,7 @@ resources:
           sourceName: zephyrproject-rtos/docs-theme
           branch: master
           buildOnPullRequest: false
-          buildOnCommit: false
+          buildOnCommit: true
 
     - name: testing_repo
       type: gitRepo
