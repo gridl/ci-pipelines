@@ -52,5 +52,5 @@ resources:
           sourceName: zephyrproject-rtos/zephyr
           branch: master
           buildOnPullRequest: false
-          buildOnCommit: false
+          buildOnCommit: true
 
