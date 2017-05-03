@@ -15,7 +15,7 @@ resources:
     - name: daily-docs
       type: time
       seed:
-          interval: "50 * * * *"
+          interval: "50 22 * * *"
 
     - name: daily-verify
       type: time
