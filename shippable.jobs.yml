@@ -20,6 +20,7 @@ jobs:
       steps:
         - IN: s3-token
         - IN: main_repo
+          switch: off
         - IN: docs_theme_repo
         - IN: daily-docs
         - TASK:
