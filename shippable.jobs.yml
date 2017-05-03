@@ -21,5 +21,6 @@ jobs:
         - IN: s3-token
         - IN: main_repo
         - IN: docs_theme_repo
+        - IN: daily-docs
         - TASK:
           - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh

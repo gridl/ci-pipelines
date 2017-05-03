@@ -12,6 +12,11 @@ resources:
       seed:
           interval: "13 21 * * *"
 
+    - name: daily-docs
+      type: time
+      seed:
+          interval: "50 * * * *"
+
     - name: daily-verify
       type: time
       seed:
