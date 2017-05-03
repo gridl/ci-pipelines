@@ -22,7 +22,7 @@ resources:
       seed:
           interval: "29 21 * * *"
 
-    - name: docs-theme-repo
+    - name: docs_theme_repo
       type: gitRepo
       integration: github
       pointer:
@@ -39,4 +39,13 @@ resources:
           branch: master
           buildOnPullRequest: false
           buildOnCommit: true
+
+    - name: main_repo
+      type: gitRepo
+      integration: github
+      pointer:
+          sourceName: zephyrproject-rtos/zephyr
+          branch: master
+          buildOnPullRequest: false
+          buildOnCommit: false
 

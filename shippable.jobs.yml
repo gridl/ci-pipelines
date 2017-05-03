@@ -19,8 +19,7 @@ jobs:
       type: runSh
       steps:
         - IN: s3-token
-        - IN: testing_repo
-        - IN: docs-theme-repo
+        - IN: main_repo
+        - IN: docs_theme_repo
         - TASK:
-          - script: env
-          - script: . /build/IN/testing_repo/gitRepo/scripts/ci/build-docs.sh
+          - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh
