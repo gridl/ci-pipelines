@@ -22,11 +22,6 @@ resources:
       seed:
           interval: "27 23 * * *"
 
-    - name: daily-verify-asserts
-      type: time
-      seed:
-          interval: "29 21 * * *"
-
     - name: docs_theme_repo
       type: gitRepo
       integration: github

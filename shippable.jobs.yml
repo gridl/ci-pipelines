@@ -3,7 +3,6 @@ jobs:
       type: runCI
       steps:
         - IN: daily-verify
-        - IN: daily-verify-asserts
         - IN: zephyr_ciRepo
         - IN: coverity-token
         - IN: s3-token
