@@ -14,6 +14,15 @@ jobs:
         - IN: coverity-token
         - IN: s3-token
 
+
+    - name: report
+      type: runSh
+      steps:
+        - IN: s3-token
+        - IN: zephyr-testing_runCI
+        - TASK:
+          - script: env
+
     - name: zephyr-daily-doc
       type: runSh
       steps:
