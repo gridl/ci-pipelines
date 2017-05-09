@@ -1,4 +1,12 @@
 jobs:
+    - name: ci-test_runCI
+      type: runCI
+      steps:
+        - IN: daily-verify
+        - IN: ci-test_ciRepo
+        - IN: coverity-token
+        - IN: s3-token
+
     - name: zephyr_runCI
       type: runCI
       steps:
