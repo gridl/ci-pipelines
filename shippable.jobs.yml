@@ -56,4 +56,4 @@ jobs:
           - script: sudo pip install breathe sphinx awscli sphinx_rtd_theme
           - script: cd /build/IN/doc_repo/gitRepo/
           - script: make html
-          - script: aws s3 sync --quiet --delete _build/html s3://zephyr-docs/online/project
+          - script: aws s3 sync --quiet --delete _build/html s3://zephyr-docs/project
