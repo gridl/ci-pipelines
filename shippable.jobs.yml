@@ -55,5 +55,6 @@ jobs:
           - script: sudo apt-get install doxygen make
           - script: sudo pip install breathe sphinx awscli sphinx_rtd_theme
           - script: cd /build/IN/doc_repo/gitRepo/
+          - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
           - script: make html
           - script: aws s3 sync --quiet --delete _build/html s3://zephyr-docs/project
