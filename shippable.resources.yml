@@ -40,6 +40,15 @@ resources:
           buildOnPullRequest: false
           buildOnCommit: true
 
+    - name: doc_repo
+      type: gitRepo
+      integration: github
+      pointer:
+          sourceName: zephyrproject-rtos/project-docs
+          branch: master
+          buildOnPullRequest: false
+          buildOnCommit: true
+
     - name: main_repo
       type: gitRepo
       integration: github

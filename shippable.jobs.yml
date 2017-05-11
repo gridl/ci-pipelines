@@ -42,3 +42,18 @@ jobs:
         - IN: daily-docs
         - TASK:
           - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh
+
+    - name: project-doc
+      type: runSh
+      steps:
+        - IN: s3-token
+        - IN: doc_repo
+          switch: off
+        - IN: docs_theme_repo
+          switch: off
+        - TASK:
+          - script: sudo apt-get install doxygen make
+          - script: sudo pip install breathe sphinx awscli sphinx_rtd_theme
+          - script: cd /build/IN/doc_repo/gitRepo/
+          - script: make html
+          - script: aws s3 sync --quiet --delete _build/html s3://zephyr-docs/online/project
