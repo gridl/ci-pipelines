@@ -57,4 +57,4 @@ jobs:
           - script: cd /build/IN/doc_repo/gitRepo/
           - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
           - script: make html
-          - script: aws s3 sync --quiet --delete _build/html s3://docs.zephyrproject.org/project
+          - script: aws s3 sync --quiet --delete _build/html s3://docs.zephyrproject.org/
