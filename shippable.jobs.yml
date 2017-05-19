@@ -4,23 +4,19 @@ jobs:
       steps:
         - IN: daily-verify
         - IN: ci-test_ciRepo
-        - IN: coverity-token
         - IN: s3-token
 
     - name: zephyr_runCI
       type: runCI
       steps:
         - IN: zephyr_ciRepo
-        - IN: coverity-token
         - IN: s3-token
 
     - name: zephyr-testing_runCI
       type: runCI
       steps:
         - IN: zephyr-testing_ciRepo
-        - IN: coverity-token
         - IN: s3-token
-
 
     - name: report
       type: runSh
@@ -40,6 +36,8 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
+          - script: sudo apt-get install doxygen make
+          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
           - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh
 
     - name: project-doc
@@ -52,8 +50,8 @@ jobs:
           switch: off
         - TASK:
           - script: sudo apt-get install doxygen make
-          - script: sudo pip install breathe sphinx awscli sphinx_rtd_theme
+          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
           - script: cd /build/IN/doc_repo/gitRepo/
           - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
           - script: make html
-          - script: aws s3 sync --quiet --delete _build/html s3://docs.zephyrproject.org/
+          - script: aws s3 sync --quiet  _build/html s3://docs.zephyrproject.org/
