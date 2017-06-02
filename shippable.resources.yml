@@ -31,15 +31,6 @@ resources:
           buildOnPullRequest: false
           buildOnCommit: true
 
-    - name: testing_repo
-      type: gitRepo
-      integration: github
-      pointer:
-          sourceName: zephyrproject-rtos/zephyr-testing
-          branch: master
-          buildOnPullRequest: false
-          buildOnCommit: true
-
     - name: doc_repo
       type: gitRepo
       integration: github

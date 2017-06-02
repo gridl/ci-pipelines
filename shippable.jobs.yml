@@ -12,20 +12,6 @@ jobs:
         - IN: zephyr_ciRepo
         - IN: s3-token
 
-    - name: zephyr-testing_runCI
-      type: runCI
-      steps:
-        - IN: zephyr-testing_ciRepo
-        - IN: s3-token
-
-    - name: report
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: zephyr-testing_runCI
-        - TASK:
-          - script: env
-
     - name: zephyr-daily-doc
       type: runSh
       steps:
@@ -36,9 +22,7 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
-          - script: sudo apt-get install doxygen make
-          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
-          - script: . /build/IN/main_repo/gitRepo/scripts/ci/build-docs.sh
+          - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
     - name: project-doc
       type: runSh
