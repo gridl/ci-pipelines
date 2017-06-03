@@ -32,6 +32,15 @@ resources:
       seed:
           interval: "50 * * * *"
 
+    - name: ci_test_repo
+      type: gitRepo
+      integration: github
+      pointer:
+          sourceName: zephyrproject-rtos/ci-test
+          branch: master
+          buildOnPullRequest: false
+          buildOnCommit: true
+
     - name: docs_theme_repo
       type: gitRepo
       integration: github

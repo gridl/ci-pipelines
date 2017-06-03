@@ -20,11 +20,13 @@ jobs:
         - IN: s3-token
         - IN: main_repo
           switch: off
+        - IN: ci_test_repo
+          switch: off
         - IN: docs_theme_repo
           switch: off
         - IN: daily-docs
         - TASK:
-          - script: . /build/IN/main_repo/gitRepo/scripts/build-docs.sh
+          - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
     - name: project-doc
       type: runSh
