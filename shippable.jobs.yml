@@ -22,7 +22,7 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
-          - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
+          - script: . /build/IN/main_repo/gitRepo/scripts/build-docs.sh
 
     - name: project-doc
       type: runSh
