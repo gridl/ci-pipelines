@@ -26,6 +26,8 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
+          - script: sudo apt-get install doxygen make
+          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
           - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
     - name: project-doc
