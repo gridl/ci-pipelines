@@ -22,6 +22,16 @@ resources:
       seed:
           interval: "0 */8 * * *"
 
+    - name: daily-verify-arm
+      type: time
+      seed:
+          interval: "53 * * * *"
+
+    - name: daily-verify-issm
+      type: time
+      seed:
+          interval: "50 * * * *"
+
     - name: docs_theme_repo
       type: gitRepo
       integration: github

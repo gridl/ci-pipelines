@@ -3,6 +3,8 @@ jobs:
       type: runCI
       steps:
         - IN: daily-verify
+        - IN: daily-verify-arm
+        - IN: daily-verify-issm
         - IN: ci-test_ciRepo
         - IN: s3-token
 
