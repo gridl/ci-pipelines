@@ -8,6 +8,7 @@ jobs:
         - IN: daily-verify-issm
         - IN: ci-test_ciRepo
         - IN: s3-token
+        - IN: code-scan
 
     - name: zephyr_runCI
       type: runCI
