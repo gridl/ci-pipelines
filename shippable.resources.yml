@@ -22,6 +22,11 @@ resources:
       seed:
           interval: "0 */8 * * *"
 
+    - name: daily-verify-debug
+      type: time
+      seed:
+          interval: "13 4 * * *"
+
     - name: daily-verify-arm
       type: time
       seed:
