@@ -9,6 +9,7 @@ jobs:
         - IN: ci-test_ciRepo
         - IN: s3-token
         - IN: code-scan
+        - IN: coverity-token
 
     - name: zephyr_runCI
       type: runCI

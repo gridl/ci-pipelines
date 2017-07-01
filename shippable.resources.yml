@@ -10,7 +10,7 @@ resources:
     - name: code-scan
       type: time
       seed:
-          interval: "45 * * * *"
+          interval: "48 * * * *"
 
     - name: daily-docs
       type: time
