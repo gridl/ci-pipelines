@@ -6,6 +6,7 @@ jobs:
         - IN: daily-verify
         - IN: daily-verify-arm
         - IN: daily-verify-issm
+          #- IN: code-scan
         - IN: ci-test_ciRepo
         - IN: s3-token
         - IN: coverity-token
@@ -37,6 +38,8 @@ jobs:
       steps:
         - IN: s3-token
         - IN: coverity-token
+          # - IN: code-scan
+          # - IN: ci-test_runCI
         - TASK:
           - script: aws s3 sync --quiet s3://coverity.zephyrproject.org/weekly/ cov-int
           - script: tar czvf coverity.tgz cov-int
