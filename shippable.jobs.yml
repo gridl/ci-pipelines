@@ -1,4 +1,10 @@
 jobs:
+    - name: meta-zephyr-sdk_runCI
+      type: runCI
+      steps:
+        - IN: s3-token
+        - IN: meta-zephyr-sdk_ciRepo
+
     - name: ci-test_runCI
       type: runCI
       steps:
