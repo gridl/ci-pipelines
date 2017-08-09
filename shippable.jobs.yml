@@ -9,13 +9,17 @@ jobs:
       type: runSh
       steps:
         - IN: s3-token
+        - IN: meta-zephyr-sdk_ciRepo
         - IN: meta-zephyr-sdk_runCI
         - TASK:
-          - script: export S3_PATH="s3://zephyr-logs/pull-requests/${REPO_FULL_NAME}/${PULL_REQUEST}"
-          - script: aws s3 sync --quiet ${S3_PATH}/toolchains/ toolchains
-          - script: sudo apt-get install -y makeself p7zip-full cpio
-          - script: cp /build/IN/meta-zephyr-sdk_ciRepo/gitRepo/scripts/make_zephyr_sdk.sh
-          - script: ./make_zephyr_sdk.sh
+          - script: export S3_PATH="s3://zephyr-logs/pull-requests/${METAZEPHYRSDK_CIREPO_SOURCENAME}/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}"
+          - script: sudo apt-get install -y makeself p7zip-full cpio tree
+          - script: sudo pip install awscli
+          - script: aws s3 sync ${S3_PATH}/toolchains/ toolchains
+          - script: tree /build
+          - script: cp toolchains/make_zephyr_sdk.sh .
+          - script: sh ./make_zephyr_sdk.sh
+          - script: aws s3 cp zephyr-sdk* ${S3_PATH}/
 
     - name: ci-test_runCI
       type: runCI
