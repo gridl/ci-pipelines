@@ -17,7 +17,7 @@ jobs:
           - script: sudo pip install awscli
           - script: aws s3 sync ${S3_PATH}/toolchains/ toolchains
           - script: tree /build
-          - script: cp toolchains/make_zephyr_sdk.sh .
+          - script: cp toolchains/make_zephyr_sdk.sh toolchains/template_dir .
           - script: sh ./make_zephyr_sdk.sh
           - script: aws s3 cp zephyr-sdk* ${S3_PATH}/
 
