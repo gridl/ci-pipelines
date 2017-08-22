@@ -31,7 +31,6 @@ jobs:
           #- IN: code-scan
         - IN: ci-test_ciRepo
         - IN: s3-token
-        - IN: coverity-token
 
     - name: zephyr_runCI
       type: runCI
@@ -54,20 +53,6 @@ jobs:
           - script: sudo apt-get install doxygen make
           - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
           - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
-
-    - name: upload-coverity
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: coverity-token
-          # - IN: code-scan
-          # - IN: ci-test_runCI
-        - TASK:
-          - script: aws s3 sync --quiet s3://coverity.zephyrproject.org/weekly/ cov-int
-          - script: tar czvf coverity.tgz cov-int
-          - script: rm -rf coverity
-          - script: curl --form token=${COVERITY_TOKEN}  --form email=it@zephyrproject.org --form file=@coverity.tgz  --form version="1.8.99" --form description="Zephyr master"  https://scan.coverity.com/builds?project=Zephyr
-          - script: rm coverity.tgz
 
     - name: project-doc
       type: runSh
