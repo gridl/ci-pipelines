@@ -12,16 +12,16 @@ jobs:
         - IN: meta-zephyr-sdk_ciRepo
         - IN: meta-zephyr-sdk_runCI
         - TASK:
-          - script: |
+          - script: >
               if [ "${IS_GIT_TAG}" = "true"]; then
-                export S3_PATH="s3://incoming.zephyrproject.org/sdk/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}"
-                sudo apt-get install -y makeself p7zip-full cpio tree
-                sudo pip install awscli
-                aws s3 sync ${S3_PATH}/toolchains/ toolchains
-                chmod +x toolchains/*.sh
-                cp toolchains/make_zephyr_sdk.sh toolchains/template_dir .
-                sh ./make_zephyr_sdk.sh
-                aws s3 cp zephyr-sdk* ${S3_PATH}/
+                export S3_PATH="s3://incoming.zephyrproject.org/sdk/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}";
+                sudo apt-get install -y makeself p7zip-full cpio tree;
+                sudo pip install awscli;
+                aws s3 sync ${S3_PATH}/toolchains/ toolchains;
+                chmod +x toolchains/*.sh;
+                cp toolchains/make_zephyr_sdk.sh toolchains/template_dir .;
+                sh ./make_zephyr_sdk.sh;
+                aws s3 cp zephyr-sdk* ${S3_PATH}/;
               fi
 
     - name: ci-test_runCI
@@ -91,6 +91,7 @@ jobs:
         - IN: test-shippable_runCI
         - IN: res-state
         - TASK:
-          - script: sudo apt-get install -y tree
-          - script: tree
+          - script: |
+                sudo apt-get install -y tree
+                tree
         - OUT: res-state
