@@ -92,6 +92,8 @@ jobs:
         - IN: res-state
         - TASK:
           - script: |
+                env
                 sudo apt-get install -y tree
                 tree
+                cat /build/IN/test-shippable_runCI/runCI/sdk.env
         - OUT: res-state
