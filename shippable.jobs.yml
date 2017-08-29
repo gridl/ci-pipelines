@@ -43,6 +43,7 @@ jobs:
       steps:
         - IN: zephyr-testing_ciRepo
 
+
     - name: zephyr-daily-doc
       type: runSh
       steps:
@@ -74,3 +75,19 @@ jobs:
           - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
           - script: make html
           - script: aws s3 sync --quiet  _build/html s3://docs.zephyrproject.org/
+
+    - name: test-shippable_runCI
+      type: runCI
+      steps:
+        - IN: res-state
+        - OUT: res-state
+
+    - name: test_shippable_final
+      type: runSh
+      steps:
+        - IN: test-shippable_runCI
+        - IN: res-state
+        - TASK:
+          - script: sudo apt-get install -y tree
+          - script: tree
+        - OUT: res-state

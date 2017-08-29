@@ -1,4 +1,7 @@
 resources:
+    - name: res-state
+      type: state
+
     - name: coverity-token
       type: integration
       integration: "coverity"
