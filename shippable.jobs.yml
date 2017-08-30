@@ -12,8 +12,9 @@ jobs:
         - IN: meta-zephyr-sdk_ciRepo
         - IN: meta-zephyr-sdk_runCI
         - TASK:
-          - script: >
-              if [ "${IS_GIT_TAG}" = "true"]; then
+          - script: |
+              . /build/IN/meta-zephyr-sdk_runCI/runCI/sdk.env;
+              if [ "${IS_GIT_TAG}" = "true" ]; then
                 export S3_PATH="s3://incoming.zephyrproject.org/sdk/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}";
                 sudo apt-get install -y makeself p7zip-full cpio tree;
                 sudo pip install awscli;
