@@ -61,7 +61,7 @@ jobs:
         - IN: daily-docs
         - TASK:
           - script: sudo apt-get install doxygen make
-          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
+          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme docutils==0.13.1
           - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
       on_failure:
         - cat doc.log || cat doc/doc.log
