@@ -60,11 +60,10 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
-          - script: sudo apt-get install doxygen make
+          - script: sudo apt install -y doxygen make
           - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme docutils==0.13.1
+          - script: touch /build/IN/main_repo/gitRepo/doc/extensions/__init__.py /build/IN/main_repo/gitRepo/doc/extensions/zephyr/__init__.py
           - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
-      on_failure:
-        - cat doc.log || cat doc/doc.log
 
     - name: project-doc
       type: runSh
