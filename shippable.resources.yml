@@ -10,6 +10,10 @@ resources:
       type: integration
       integration: "aws_s3"
 
+    - name: s3-token-simple
+      type: integration
+      integration: "aws_s3_simple"
+
     - name: code-scan
       type: time
       seed:

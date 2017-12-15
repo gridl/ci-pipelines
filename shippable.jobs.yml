@@ -40,12 +40,13 @@ jobs:
       type: runCI
       steps:
         - IN: zephyr_ciRepo
-        - IN: s3-token
+        - IN: s3-token-simple
 
     - name: zephyr-testing_runCI
       type: runCI
       steps:
         - IN: zephyr-testing_ciRepo
+        - IN: s3-token-simple
 
 
     - name: zephyr-daily-doc
