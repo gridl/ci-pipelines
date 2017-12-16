@@ -6,6 +6,10 @@ resources:
       type: integration
       integration: "coverity"
 
+    - name: codecov
+      type: integration
+      integration: "codecov"
+
     - name: s3-token
       type: integration
       integration: "aws_s3"
