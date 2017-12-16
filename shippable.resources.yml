@@ -2,10 +2,6 @@ resources:
     - name: res-state
       type: state
 
-    - name: coverity-token
-      type: integration
-      integration: "coverity"
-
     - name: codecov
       type: integration
       integration: "codecov"
@@ -17,11 +13,6 @@ resources:
     - name: s3-token-simple
       type: integration
       integration: "aws_s3_simple"
-
-    - name: code-scan
-      type: time
-      seed:
-          interval: "32 * * * *"
 
     - name: daily-docs
       type: time

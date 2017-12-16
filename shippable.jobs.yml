@@ -49,7 +49,6 @@ jobs:
         - IN: s3-token-simple
         - IN: codecov
 
-
     - name: zephyr-daily-doc
       type: runSh
       steps:
@@ -83,21 +82,3 @@ jobs:
           - script: make html
           - script: aws s3 sync --quiet  _build/html s3://docs.zephyrproject.org/
 
-    - name: test-shippable_runCI
-      type: runCI
-      steps:
-        - IN: res-state
-        - OUT: res-state
-
-    - name: test_shippable_final
-      type: runSh
-      steps:
-        - IN: test-shippable_runCI
-        - IN: res-state
-        - TASK:
-          - script: |
-                env
-                sudo apt-get install -y tree
-                tree
-                cat /build/IN/test-shippable_runCI/runCI/sdk.env
-        - OUT: res-state
