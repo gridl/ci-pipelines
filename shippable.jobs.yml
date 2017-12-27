@@ -41,6 +41,7 @@ jobs:
       steps:
         - IN: zephyr_ciRepo
         - IN: s3-token-simple
+        - IN: codecov
 
     - name: zephyr-testing_runCI
       type: runCI
