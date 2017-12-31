@@ -43,6 +43,30 @@ jobs:
         - IN: s3-token-simple
         - IN: codecov
 
+    - name: post_build_action
+      type: runSh
+      steps:
+        - IN: s3-token
+        - IN: zephyr-testing_ciRepo
+        - IN: zephyr-testing_runCI
+        - TASK:
+          - script: |
+              export S3_PATH="s3://incoming.zephyrproject.org/coverage/${ZEPHYRTESTING_CIREPO_VERSIONNUMBER}";
+              sudo apt-get install -y lcov;
+              sudo pip install awscli;
+              echo "Getting data";
+              aws s3 sync ${S3_PATH}/ coverage;
+              ls -la coverage/;
+              while read FILENAME; do
+                  echo "found file: ${FILENAME}";
+                  LCOV_INPUT_FILES="$LCOV_INPUT_FILES -a $FILENAME";
+              done < <( find coverage/ -name *.info );
+              echo "Running lcov.."
+              echo "lcov ${LCOV_INPUT_FILES} -o coverage/merged.info";
+              lcov ${LCOV_INPUT_FILES} -o coverage/merged.info;
+              genhtml --legend -o coverage/html coverage/merged.info;
+              aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/
+
     - name: zephyr-testing_runCI
       type: runCI
       steps:
