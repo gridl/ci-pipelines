@@ -49,6 +49,7 @@ jobs:
         - IN: s3-token
         - IN: zephyr-testing_ciRepo
         - IN: zephyr-testing_runCI
+        - IN: testing_repo
         - TASK:
           - script: |
               export S3_PATH="s3://incoming.zephyrproject.org/coverage/${ZEPHYRTESTING_CIREPO_VERSIONNUMBER}";
