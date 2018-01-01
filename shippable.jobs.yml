@@ -68,8 +68,9 @@ jobs:
               lcov --rc lcov_branch_coverage=1 ${LCOV_INPUT_FILES} -o coverage/merged.info;
               sed -i "s@/home/buildslave/src/github.com/zephyrproject-rtos/zephyr-testing@${TESTING_REPO_STATE}@g" coverage/merged.info;
               lcov --rc lcov_branch_coverage=1 -r coverage/merged.info "/usr/*" -o coverage/merged-final.info
-              genhtml --legend -o coverage/html coverage/merged-final.info;
-              aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/
+              genhtml --rc lcov_branch_coverage=1  --legend -o coverage/html coverage/merged-final.info;
+              aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/;
+              aws s3 cp coverage/merged-final.info s3://docs.zephyrproject.org/coverage/
 
     - name: zephyr-testing_runCI
       type: runCI
