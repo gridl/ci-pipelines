@@ -53,6 +53,7 @@ jobs:
         - TASK:
           - script: |
               export S3_PATH="s3://incoming.zephyrproject.org/coverage/${ZEPHYRTESTING_CIREPO_VERSIONNUMBER}";
+              cd ${TESTING_REPO_STATE}
               sudo apt-get install -y lcov;
               sudo pip install awscli;
               echo "Getting data";
@@ -65,7 +66,8 @@ jobs:
               echo "Running lcov.."
               echo "lcov ${LCOV_INPUT_FILES} -o coverage/merged.info";
               lcov ${LCOV_INPUT_FILES} -o coverage/merged.info;
-              genhtml --legend -o coverage/html coverage/merged.info;
+              sed -i "s@/home/buildslave/src/github.com/zephyrproject-rtos/zephyr-testing@${TESTING_REPO_STATE}@g" coverage/merged.info;
+              genhtml --ignore-errors --legend -o coverage/html coverage/merged.info;
               aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/
 
     - name: zephyr-testing_runCI
