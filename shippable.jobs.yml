@@ -95,7 +95,7 @@ jobs:
         - IN: daily-docs
         - TASK:
           - script: sudo apt install -y doxygen make
-          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme docutils==0.13.1
+          - script: sudo pip install breathe==4.7.3 sphinx==1.6.5  awscli sphinx_rtd_theme docutils==0.14
           - script: touch /build/IN/main_repo/gitRepo/doc/extensions/__init__.py /build/IN/main_repo/gitRepo/doc/extensions/zephyr/__init__.py
           - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
