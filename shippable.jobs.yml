@@ -94,10 +94,16 @@ jobs:
           switch: off
         - IN: daily-docs
         - TASK:
-          - script: sudo apt install -y doxygen make
-          - script: sudo pip install breathe==4.7.3 sphinx==1.6.5  awscli sphinx_rtd_theme docutils==0.14
-          - script: touch /build/IN/main_repo/gitRepo/doc/extensions/__init__.py /build/IN/main_repo/gitRepo/doc/extensions/zephyr/__init__.py
-          - script: . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
+          name: daily_docs
+          runtime:
+            container: true
+            options:
+              image_name: zephyrprojectrtos/ci
+              image_tag: v0.3
+              pull: true
+              options: "-e HOME=/home/buildslave --privileged=true --tty --net=bridge --user buildslave"
+          script:
+            - . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
     - name: project-doc
       type: runSh
