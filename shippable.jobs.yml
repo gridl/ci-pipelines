@@ -1,123 +1,122 @@
 jobs:
-    - name: meta-zephyr-sdk_runCI
-      type: runCI
-      steps:
-        - IN: s3-token
-        - IN: meta-zephyr-sdk_ciRepo
+  - name: meta-zephyr-sdk_runCI
+    type: runCI
+    steps:
+      - IN: s3-token
+      - IN: meta-zephyr-sdk_ciRepo
 
-    - name: create_sdk
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: meta-zephyr-sdk_ciRepo
-        - IN: meta-zephyr-sdk_runCI
-        - TASK:
-          - script: |
-              test -f /build/IN/meta-zephyr-sdk_runCI/runCI/sdk.env && . /build/IN/meta-zephyr-sdk_runCI/runCI/sdk.env;
-              if [ "${IS_GIT_TAG}" = "true" ]; then
-                export S3_PATH="s3://incoming.zephyrproject.org/sdk/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}";
-                sudo apt-get install -y makeself p7zip-full cpio tree;
-                sudo pip install awscli;
-                aws s3 sync ${S3_PATH}/toolchains/ toolchains;
-                chmod +x toolchains/*.sh;
-                cp toolchains/make_zephyr_sdk.sh toolchains/template_dir .;
-                sh ./make_zephyr_sdk.sh;
-                aws s3 cp zephyr-sdk* ${S3_PATH}/;
-              fi
-
-    - name: ci-test_runCI
-      type: runCI
-      steps:
-        - IN: daily-verify-debug
-        - IN: daily-verify
-        - IN: daily-verify-arm
-        - IN: daily-verify-issm
-          #- IN: code-scan
-        - IN: ci-test_ciRepo
-        - IN: s3-token
-
-    - name: zephyr_runCI
-      type: runCI
-      steps:
-        - IN: zephyr_ciRepo
-        - IN: s3-token-simple
-        - IN: codecov
-
-    - name: post_build_action
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: zephyr-testing_ciRepo
-        - IN: zephyr-testing_runCI
-        - IN: testing_repo
-        - TASK:
-          - script: |
-              env
-              export S3_PATH="s3://incoming.zephyrproject.org/coverage/${ZEPHYRTESTING_CIREPO_VERSIONNUMBER}";
-              cd ${TESTING_REPO_STATE}
-              sudo apt-get install -y lcov;
+  - name: create_sdk
+    type: runSh
+    steps:
+      - IN: s3-token
+      - IN: meta-zephyr-sdk_ciRepo
+      - IN: meta-zephyr-sdk_runCI
+      - TASK:
+        - script: |
+            test -f /build/IN/meta-zephyr-sdk_runCI/runCI/sdk.env && . /build/IN/meta-zephyr-sdk_runCI/runCI/sdk.env;
+            if [ "${IS_GIT_TAG}" = "true" ]; then
+              export S3_PATH="s3://incoming.zephyrproject.org/sdk/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}";
+              sudo apt-get install -y makeself p7zip-full cpio tree;
               sudo pip install awscli;
-              echo "Getting data from S3";
-              aws s3 sync ${S3_PATH}/ coverage;
-              ls -la coverage/;
-              while read FILENAME; do
-                  echo "Found file: ${FILENAME}";
-                  LCOV_INPUT_FILES="$LCOV_INPUT_FILES -a $FILENAME";
-              done < <( find coverage/ -name *.info );
-              echo "Running lcov.."
-              echo "lcov ${LCOV_INPUT_FILES} -o coverage/merged.info";
-              lcov --rc lcov_branch_coverage=1 ${LCOV_INPUT_FILES} -o coverage/merged.info;
-              sed -i "s@/home/buildslave/src/github.com/zephyrproject-rtos/zephyr-testing@${TESTING_REPO_STATE}@g" coverage/merged.info;
-              lcov --rc lcov_branch_coverage=1 -r coverage/merged.info "/usr/*" -o coverage/merged-final.info
-              echo "Running genhtml.."
-              genhtml --rc lcov_branch_coverage=1  --legend -o coverage/html coverage/merged-final.info;
-              echo "Uploading data.."
-              aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/;
-              aws s3 cp coverage/merged-final.info s3://docs.zephyrproject.org/coverage/
+              aws s3 sync ${S3_PATH}/toolchains/ toolchains;
+              chmod +x toolchains/*.sh;
+              cp toolchains/make_zephyr_sdk.sh toolchains/template_dir .;
+              sh ./make_zephyr_sdk.sh;
+              aws s3 cp zephyr-sdk* ${S3_PATH}/;
+            fi
 
-    - name: zephyr-testing_runCI
-      type: runCI
-      steps:
-        - IN: zephyr-testing_ciRepo
-        - IN: s3-token-simple
-        - IN: codecov_testing
+  - name: ci-test_runCI
+    type: runCI
+    steps:
+      - IN: daily-verify-debug
+      - IN: daily-verify
+      - IN: daily-verify-arm
+      - IN: daily-verify-issm
+      - IN: ci-test_ciRepo
+      - IN: s3-token
 
-    - name: zephyr-daily-doc
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: main_repo
-          switch: off
-        - IN: ci_test_repo
-          switch: off
-        - IN: docs_theme_repo
-          switch: off
-        - IN: daily-docs
-        - TASK:
+  - name: zephyr_runCI
+    type: runCI
+    steps:
+      - IN: zephyr_ciRepo
+      - IN: s3-token-simple
+      - IN: codecov
+
+  - name: post_build_action
+    type: runSh
+    steps:
+      - IN: s3-token
+      - IN: zephyr-testing_ciRepo
+      - IN: zephyr-testing_runCI
+      - IN: testing_repo
+      - TASK:
+        - script: |
+            env
+            export S3_PATH="s3://incoming.zephyrproject.org/coverage/${ZEPHYRTESTING_CIREPO_VERSIONNUMBER}";
+            cd ${TESTING_REPO_STATE}
+            sudo apt-get install -y lcov;
+            sudo pip install awscli;
+            echo "Getting data from S3";
+            aws s3 sync ${S3_PATH}/ coverage;
+            ls -la coverage/;
+            while read FILENAME; do
+                echo "Found file: ${FILENAME}";
+                LCOV_INPUT_FILES="$LCOV_INPUT_FILES -a $FILENAME";
+            done < <( find coverage/ -name *.info );
+            echo "Running lcov.."
+            echo "lcov ${LCOV_INPUT_FILES} -o coverage/merged.info";
+            lcov --rc lcov_branch_coverage=1 ${LCOV_INPUT_FILES} -o coverage/merged.info;
+            sed -i "s@/home/buildslave/src/github.com/zephyrproject-rtos/zephyr-testing@${TESTING_REPO_STATE}@g" coverage/merged.info;
+            lcov --rc lcov_branch_coverage=1 -r coverage/merged.info "/usr/*" -o coverage/merged-final.info
+            echo "Running genhtml.."
+            genhtml --rc lcov_branch_coverage=1  --legend -o coverage/html coverage/merged-final.info;
+            echo "Uploading data.."
+            aws s3 sync coverage/html/ s3://docs.zephyrproject.org/coverage/;
+            aws s3 cp coverage/merged-final.info s3://docs.zephyrproject.org/coverage/
+
+  - name: zephyr-testing_runCI
+    type: runCI
+    steps:
+      - IN: zephyr-testing_ciRepo
+      - IN: s3-token-simple
+      - IN: codecov_testing
+
+  - name: zephyr-daily-doc
+    type: runSh
+    steps:
+      - IN: s3-token
+      - IN: main_repo
+        switch: off
+      - IN: ci_test_repo
+        switch: off
+      - IN: docs_theme_repo
+        switch: off
+      - IN: daily-docs
+      - TASK:
           name: daily_docs
           runtime:
             container: true
             options:
-              image_name: zephyrprojectrtos/ci
-              image_tag: v0.3
+              imageName: zephyrprojectrtos/ci
+              imageTag: v0.3
               pull: true
               options: "-e HOME=/home/buildslave --privileged=true --tty --net=bridge --user buildslave"
           script:
             - . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
-    - name: project-doc
-      type: runSh
-      steps:
-        - IN: s3-token
-        - IN: doc_repo
-          switch: off
-        - IN: docs_theme_repo
-          switch: off
-        - TASK:
-          - script: sudo apt-get install doxygen make
-          - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
-          - script: cd /build/IN/doc_repo/gitRepo/
-          - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
-          - script: make html
-          - script: aws s3 sync --quiet  _build/html s3://docs.zephyrproject.org/
+  - name: project-doc
+    type: runSh
+    steps:
+      - IN: s3-token
+      - IN: doc_repo
+        switch: off
+      - IN: docs_theme_repo
+        switch: off
+      - TASK:
+        - script: sudo apt-get install doxygen make
+        - script: sudo pip install breathe==4.6.0 sphinx==1.5.5  awscli sphinx_rtd_theme
+        - script: cd /build/IN/doc_repo/gitRepo/
+        - script: cp -a /build/IN/docs_theme_repo/gitRepo/ themes/zephyr-docs-theme
+        - script: make html
+        - script: aws s3 sync --quiet  _build/html s3://docs.zephyrproject.org/
 
