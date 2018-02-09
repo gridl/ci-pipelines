@@ -100,7 +100,7 @@ jobs:
               imageName: zephyrprojectrtos/ci
               imageTag: v0.3
               pull: true
-              options: "-e HOME=/home/buildslave --privileged=true --tty --net=bridge --user buildslave"
+              options: "--privileged=true --tty --net=bridge"
           script:
             - . /build/IN/ci_test_repo/gitRepo/scripts/build-docs.sh
 
